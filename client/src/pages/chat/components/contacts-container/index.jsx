@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import ContactList from "@/components/common/contact-list";
 import Logo from "@/components/common/logo";
 import ProfileInfo from "./components/profile-info";
@@ -6,19 +7,15 @@ import {
   GET_CONTACTS_WITH_MESSAGES_ROUTE,
   GET_USER_CHANNELS,
 } from "@/lib/constants";
-import { useEffect } from "react";
 import { useAppStore } from "@/store";
 import NewDM from "./components/new-dm/new-dm";
 import CreateChannel from "./components/create-channel/create-channel";
+import { toast } from "react-toastify"; // Make sure to import toast for notifications
 
 const ContactsContainer = () => {
-  const {
-    setDirectMessagesContacts,
-    directMessagesContacts,
-    channels,
-    setChannels,
-  } = useAppStore();
+  const { setDirectMessagesContacts, directMessagesContacts, channels, setChannels } = useAppStore();
 
+  // Fetch contacts and channels data
   useEffect(() => {
     const getContactsWithMessages = async () => {
       const response = await apiClient.get(GET_CONTACTS_WITH_MESSAGES_ROUTE, {
@@ -44,39 +41,41 @@ const ContactsContainer = () => {
   }, [setChannels]);
 
   return (
-    <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[20vw] bg-[#1b1c24] border-r-2 border-[#2f303b] w-full">
-      <div className=" pt-3">
+    <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[20vw] bg-[#1b1c24] border-r-2 border-[#2f303b] w-full flex flex-col h-full">
+      <div className="pt-3 px-4">
         <Logo />
       </div>
-      <div className="my-5">
-        <div className="flex items-center justify-between pr-10">
+      <div className="my-5 flex-grow">
+        <div className="flex items-center justify-between pr-4 mb-2">
           <Title text="Direct Messages" />
           <NewDM />
         </div>
-        <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
+        <div className="max-h-[35vh] overflow-y-auto scrollbar-hidden mb-4">
           <ContactList contacts={directMessagesContacts} />
         </div>
       </div>
-      <div className="my-5">
-        <div className="flex items-center justify-between pr-10">
+      <div className="my-5 flex-grow">
+        <div className="flex items-center justify-between pr-4 mb-2">
           <Title text="Channels" />
           <CreateChannel />
         </div>
-        <div className="max-h-[37vh] overflow-y-auto scrollbar-hidden pb-5">
+        <div className="max-h-[35vh] overflow-y-auto scrollbar-hidden pb-5">
           <ContactList contacts={channels} isChannel />
         </div>
       </div>
-      <ProfileInfo />
+      <div className="mt-auto px-4">
+        <ProfileInfo />
+      </div>
     </div>
   );
 };
 
-export default ContactsContainer;
-
 const Title = ({ text }) => {
   return (
-    <h6 className="uppercase tracking-widest text-neutral-400 pl-10 font-light text-opacity-90 text-sm">
+    <h6 className="uppercase tracking-widest text-neutral-400 font-light text-opacity-90 text-sm">
       {text}
     </h6>
   );
 };
+
+export default ContactsContainer;

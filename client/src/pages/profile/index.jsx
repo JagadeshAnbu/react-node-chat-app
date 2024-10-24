@@ -86,6 +86,7 @@ const Profile = () => {
       }
       const reader = new FileReader();
       reader.onloadend = () => {
+        
         setImage(reader.result);
       };
       reader.readAsDataURL(file);
