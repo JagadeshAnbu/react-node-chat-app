@@ -77,7 +77,7 @@ export const login = async (req, res, next) => {
 };
 
 export const getUserInfo = async (request, response, next) => {
-  try {
+  try {  
     if (request.userId) {
       const userData = await User.findById(request.userId);
       if (userData) {

@@ -9,7 +9,6 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     const token = Cookies.get("access-token");
-
     if (
       token &&
       !config.url.includes("/login") &&

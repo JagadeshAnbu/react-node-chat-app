@@ -86,7 +86,7 @@ const Profile = () => {
       }
       const reader = new FileReader();
       reader.onloadend = () => {
-        
+
         setImage(reader.result);
       };
       reader.readAsDataURL(file);
@@ -204,11 +204,10 @@ const Profile = () => {
             <div className="w-full flex gap-5">
               {colors.map((color, index) => (
                 <div
-                  className={`${color} h-8 w-8 rounded-full cursor-pointer transition-all duration-100 ${
-                    selectedColor === index
+                  className={`${color} h-8 w-8 rounded-full cursor-pointer transition-all duration-100 ${selectedColor === index
                       ? " outline outline-white outlin4"
                       : ""
-                  }`}
+                    }`}
                   key={index}
                   onClick={() => setSelectedColor(index)}
                 ></div>
